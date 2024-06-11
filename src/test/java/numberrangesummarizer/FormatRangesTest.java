@@ -3,6 +3,9 @@ package numberrangesummarizer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 
 class FormatRangesTest {
@@ -75,6 +78,65 @@ class FormatRangesTest {
             collector.collect(input);
         });
         assertEquals("Invalid Number: 2and", exception.getMessage());
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_EmptyList(){
+        Collection<Integer> input = new ArrayList<>();
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "";
+        assertEquals(expectedResult, summary);
+
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_SingleNumber(){
+        Collection<Integer> input = new ArrayList<>();
+        input.add(3);
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "3";
+        assertEquals(expectedResult, summary);
+
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_NonSequentialNumbers(){
+        Collection<Integer> input = new ArrayList<>(Arrays.asList(1,3,6,7,8,12,13,14,15,21,22,23,24,31));
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "1, 3, 6-8, 12-15, 21-24, 31";
+        assertEquals(expectedResult, summary);
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_SequentialNumbers(){
+        Collection<Integer> input = new ArrayList<>(Arrays.asList(3,4,5,6,7,8,9,10,11,12,13,14,15,16,17));
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "3-17";
+        assertEquals(expectedResult, summary);
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_UnsortedInput(){
+        Collection<Integer> input = new ArrayList<>(Arrays.asList(24,3,7,6,15,8,14,13,12,1,23,31,22,21));
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "1, 3, 6-8, 12-15, 21-24, 31";
+        assertEquals(expectedResult, summary);
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_MixedNumbers(){
+        Collection<Integer> input = new ArrayList<>(Arrays.asList(24,-3,7,-6,-15,-8,14,-13,12,1,-23,31,22,21));
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "1, 3, 6-8, 12-15, 21-24, 31";
+        assertEquals(expectedResult, summary);
+    }
+
+    @Test
+    public void testFormRanges_summarizeCollection_Duplicates(){
+        Collection<Integer> input = new ArrayList<>(Arrays.asList(1,3,3,3,6,7,7,7,8,12,13,14,14,14,15,21,22,23,24,31,32,33,33,33,40));
+        String summary = collector.summarizeCollection(input);
+        String expectedResult = "1, 3, 6-8, 12-15, 21-24, 31-33, 40";
+        assertEquals(expectedResult, summary);
     }
 
 }
