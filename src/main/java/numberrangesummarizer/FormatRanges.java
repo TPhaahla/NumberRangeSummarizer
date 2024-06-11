@@ -2,7 +2,17 @@ package numberrangesummarizer;
 
 import java.util.*;
 
+/**
+ * @author Tshiamo
+ * A class which implements the NumberRangeSummarizer interface.
+ */
 public class FormatRanges implements NumberRangeSummarizer {
+
+    /**
+     * Formats a string of comma-delimited integers into a collection of integer elements
+     * @param input a string of comma delimited integers
+     * @return a collection of integers
+     */
     @Override
     public Collection<Integer> collect(String input) {
         Collection<Integer> numbers = new ArrayList<>();
@@ -26,6 +36,11 @@ public class FormatRanges implements NumberRangeSummarizer {
         return numbers;
     }
 
+    /**
+     * Formats a collection of integers into a comma-delimited string of numbers, grouping the numbers into ranges when they are sequential
+     * @param input a collection of integers to be processed in order to determine the ranges
+     * @return a string representing the formatted ranges of numbers separated by commas, or an empty string if the input is empty or null
+     */
     @Override
     public String summarizeCollection(Collection<Integer> input) {
 
@@ -33,8 +48,7 @@ public class FormatRanges implements NumberRangeSummarizer {
             return "";
         }
 
-
-//       Use HashSet to remove duplicates
+        // Use HashSet to remove duplicates
         Set<Integer> unique_input = new HashSet<>(input);
         List<Integer> numbers = new ArrayList<>(unique_input);
 
@@ -42,6 +56,7 @@ public class FormatRanges implements NumberRangeSummarizer {
         Collections.sort(numbers);
 
         List<String> summary = new ArrayList<>();
+
         int first_pointer = numbers.getFirst();
         int second_pointer = first_pointer;
 
@@ -60,6 +75,12 @@ public class FormatRanges implements NumberRangeSummarizer {
         return String.join(", ", summary);
     }
 
+    /**
+     * Appends the range or a single number to the summary list of formatted ranges.
+     * @param summary the list to append the ranges to
+     * @param start the start of the range
+     * @param end the end of the range
+     */
     private void addRange(List<String> summary, int start, int end) {
         if (start == end) {
             summary.add(String.valueOf(start));
