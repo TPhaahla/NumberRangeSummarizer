@@ -127,7 +127,7 @@ class FormatRangesTest {
     public void testFormRanges_summarizeCollection_MixedNumbers(){
         Collection<Integer> input = new ArrayList<>(Arrays.asList(24,-3,7,-6,-15,-8,14,-13,12,1,-23,31,22,21));
         String summary = collector.summarizeCollection(input);
-        String expectedResult = "1, 3, 6-8, 12-15, 21-24, 31";
+        String expectedResult = "-23, -15, -13, -8, -6, -3, 1, 7, 12, 14, 21-22, 24, 31";
         assertEquals(expectedResult, summary);
     }
 
